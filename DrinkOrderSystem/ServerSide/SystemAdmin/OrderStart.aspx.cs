@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DBORM;
+using DrinkOrderSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -18,6 +20,10 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
         protected void Imgbtn50Lan_Click(object sender, ImageClickEventArgs e)
         {
+            this.txtChooseDrinkList.Text = string.Empty;
+            Session.Clear();
+
+            this.Session["DrinkShop"] = "50Lan";
             string SupplierName = "50Lan";
             var dt = GetChooseDrinkList(SupplierName);
 
@@ -26,6 +32,10 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
         protected void ImgbtnWhiteAlley_Click(object sender, ImageClickEventArgs e)
         {
+            this.txtChooseDrinkList.Text = string.Empty;
+            Session.Clear();
+
+            this.Session["DrinkShop"] = "WhiteAlley";
             string SupplierName = "WhiteAlley";
             var dt = GetChooseDrinkList(SupplierName);
 
@@ -34,6 +44,10 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
         protected void ImgbtnMilkshop_Click(object sender, ImageClickEventArgs e)
         {
+            this.txtChooseDrinkList.Text = string.Empty;
+            Session.Clear();
+
+            this.Session["DrinkShop"] = "Milkshop";
             string SupplierName = "Milkshop";
             var dt = GetChooseDrinkList(SupplierName);
 
@@ -60,48 +74,160 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 this.btnSent.Visible = false;
             }
         }
+
         /// <summary>
         /// GridView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void gvChooseDrink_RowCommand(object sender, GridViewCommandEventArgs e)
+        public void gvChooseDrink_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            //if (string.Compare("ChooseDrink", e.CommandName, true) == 0)   //第一種自己寫的
-            //{
-            //    var DDL1 = ((Control)e.CommandSource).FindControl("dlChooseSugar") as DropDownList;
-            //    this.txtChooseDrinkList.Text = $"{e.CommandArgument as string} + {DDL1.SelectedItem}";
-            //}
-
             var item = e.CommandSource as Button;    //第二種 老師解的
+            var container = item.NamingContainer;   // 找到 button 的容器，它會是 GridViewRow
 
-            if (string.Compare("ChooseDrink", item.CommandName, true) == 0)
+            this.txtChooseDrinkList.Visible = true;
+            this.lbText.Visible = true;
+            this.lbTotalAmount.Visible = true;
+            this.btnDelete.Visible = true;
+            this.btnSent.Visible = true;
+
+            var DDLQuantity = container.FindControl("dlQuantity") as DropDownList;
+            var DDlSugar = container.FindControl("dlChooseSugar") as DropDownList;
+            var DDLIce = container.FindControl("dlChooseIce") as DropDownList;
+            var DDLToppings = container.FindControl("dlChooseToppings") as DropDownList;
+
+            if (DDLQuantity.SelectedIndex == 0)
             {
-                this.txtChooseDrinkList.Visible = true;
+                this.txtChooseDrinkList.Text = "杯數選擇錯誤，請重新選擇";
+                return;
+            }
+            if (DDlSugar.SelectedIndex == 0)
+            {
+                this.txtChooseDrinkList.Text = "糖量選擇錯誤，請重新選擇";
+                return;
+            }
+            if (DDLIce.SelectedIndex == 0)
+            {
+                this.txtChooseDrinkList.Text = "冰塊選擇錯誤，請重新選擇";
+                return;
+            }
+            if (DDLToppings.SelectedIndex == 0)
+            {
+                this.txtChooseDrinkList.Text = "加料選擇錯誤，請重新選擇";
+                return;
+            }
 
-                // 找到 button 的容器，它會是 GridViewRow
-                var container = item.NamingContainer;
+            if (string.Compare("ChooseDrink", item.CommandName, true) == 0)  //(e.CommandName == "ChooseDrink")
+            {
+                string argu = (e.CommandArgument) as string;
+                var supplierName = this.Session["DrinkShop"].ToString();
+                var orderNumber = "001";
+                var account = "BpbMa";
 
-                var DDL1 = container.FindControl("dlChooseSugar") as DropDownList;
-                var DDL2 = container.FindControl("dlChooseIce") as DropDownList;
-                var DDL3 = container.FindControl("dlChooseToppings") as DropDownList;
+                this.txtChooseDrinkList.Text += $"{e.CommandArgument as string} {DDLQuantity.SelectedItem}杯 {DDlSugar.SelectedItem} {DDLIce.SelectedItem} {DDLToppings.SelectedItem} {GetUnitPrice(e.CommandArgument as string)}元/杯 \r\n";
 
-                this.txtChooseDrinkList.Text += $"{e.CommandArgument as string} {DDL1.SelectedItem} {DDL2.SelectedItem} {DDL3.SelectedItem}\r\n";
+                var list = this.txtChooseDrinkList.Text;
+                
+               
+                List<DBORM.OrderDetail> sourcedetaillist = GetOrderDetailList(supplierName);
 
-                this.btnDelete.Visible = true;
-                this.btnSent.Visible = true;
+                var DrinkList = sourcedetaillist.Where(obj => obj.ProductName == argu).FirstOrDefault();
+
+                if (DrinkList != null)
+                {
+                    if (this.Session["SelectedItems"] == null)
+                        this.Session["SelectedItems"] = new List<DrinkRedirectModel>();
+                }
+                var orderdetaillist = new DrinkRedirectModel()
+                {
+                    OrderNumber = orderNumber,
+                    Account = account,
+                    OrderTime = DateTime.Now.ToString(),
+                    OrderEndTime = DateTime.Now.ToString(),
+                    RequiredTime = DateTime.Now.ToString(),
+                    ProductName = e.CommandArgument as string,
+                    Quantity = Convert.ToInt32(DDLQuantity.SelectedItem.Value),
+                    UnitPrice = GetUnitPrice(e.CommandArgument as string),
+                    Suger = DDlSugar.SelectedItem.ToString(),
+                    Ice = DDlSugar.SelectedItem.ToString(),
+                    Toppings = DDLToppings.SelectedItem.ToString(),
+                    SupplierName = supplierName,
+                    OtherRequest = null,
+                };
+
+                //((List<DrinkRedirectModel>)this.Session["SelectedItems"]).Add(orderdetaillist);
+
+                var sessionLList = this.Session["SelectedItems"] as List<DrinkRedirectModel>;    //將Session轉成List，再做總和
+                sessionLList.Add(orderdetaillist);
+
+                decimal totalAmount = 0;
+                foreach(var item2 in sessionLList)
+                {
+                    //var amount = item2.Quantity * item2.UnitPrice;
+                    //totalAmount += amount;
+                    totalAmount += item2.SubtotalAmount;
+                }
+
+                this.lbTotalAmount.Text =// $"{GetSubtotalAmount(orderNumber, account)}";
+                                         //sessionLList.Select(obj => obj.Quantity * obj.UnitPrice).Sum().ToString();
+                                         //sessionLList.Select(obj => obj.SubtotalAmount).Sum().ToString();
+                    totalAmount.ToString();
+
             }
 
         }
 
+        public static List<DBORM.OrderDetail> GetOrderDetailList(string supplierName)
+        {
+            try
+            {
+                using (DBContextModel context = new DBContextModel())
+                {
+                    var query =
+                        (from item in context.OrderDetails
+                         where item.SupplierName == supplierName
+                         select item
+                        );
+
+                    var list = query.ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        public static decimal GetUnitPrice(string ProductName)
+        {
+            try
+            {
+                using (DBContextModel context = new DBContextModel())
+                {
+                    var price = context.Products
+                        .Select(obj => obj.UnitPrice);
+                    var UnitPrice = price.FirstOrDefault();
+                    return UnitPrice;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return decimal.Zero;
+            }
+        }
+
         /// <summary>
-        /// 清除選單內容
+        /// 清除選單內容、Session
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             this.txtChooseDrinkList.Text = string.Empty;
+            Session.Remove("SelectedItems");  //選擇要的Session做刪除
         }
 
         /// <summary>
@@ -113,8 +239,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         {
             Response.Redirect("OrderConfirm.aspx");
         }
-
-
 
 
         /// <summary>
@@ -144,7 +268,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 return null;
             }
         }
-
 
         public class DBHelper
         {
@@ -202,16 +325,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
             }
         }
-
-        public class DrinkInfoModel
-        {
-            //和DB裡的欄位一致
-            public string ProductName { get; set; }
-            public string SupplierID { get; set; }
-            public string SupplierName { get; set; }
-            public string UnitPrice { get; set; }
-        }
-
         private int GetCurrentPage()
         {
             string pageText = Request.QueryString["Page"];

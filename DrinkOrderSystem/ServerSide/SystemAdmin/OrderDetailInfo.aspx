@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OrderDetail.aspx.cs" Inherits="DrinkOrderSystem.ServerSide.SystemAdmin.OrderDetail" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OrderDetailInfo.aspx.cs" Inherits="DrinkOrderSystem.ServerSide.SystemAdmin.OrderDetailInfo" %>
 
 <!DOCTYPE html>
 

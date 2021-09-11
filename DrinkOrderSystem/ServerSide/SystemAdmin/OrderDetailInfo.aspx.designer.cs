@@ -10,7 +10,7 @@
 
 namespace DrinkOrderSystem.ServerSide.SystemAdmin
 {
-    public partial class OrderDetail
+    public partial class OrderDetailInfo
     {
 
         /// <summary>

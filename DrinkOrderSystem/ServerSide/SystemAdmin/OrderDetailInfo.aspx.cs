@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace DrinkOrderSystem.ServerSide.SystemAdmin
 {
-    public partial class OrderDetail : System.Web.UI.Page
+    public partial class OrderDetailInfo : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
