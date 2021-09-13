@@ -36,13 +36,13 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             {
                 var dtPaged = this.GetPagedDataTable(dt);
 
-                this.gvChooseDrink.DataSource = dtPaged;
-                this.gvChooseDrink.DataBind();
+                this.gvOderMid.DataSource = dtPaged;
+                this.gvOderMid.DataBind();
                 this.ucPager.Visible = true;
             }
             else
             {
-                this.gvChooseDrink.Visible = false;
+                this.gvOderMid.Visible = false;
                 this.btnSent.Visible = false;
             }
         }
@@ -52,7 +52,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void gvChooseDrink_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void gvOderMid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             var item = e.CommandSource as Button;
             var container = item.NamingContainer;
@@ -137,7 +137,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
 
                 this.lbTotalAmount.Text = totalAmount.ToString();
-
             }
         }
 
@@ -201,48 +200,48 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         /// <param name="e"></param>
         protected void btnSent_Click(object sender, EventArgs e)
         {
-            //var writSession = this.Session["SelectedItems"] as List<DrinkRedirectModel>;
+            var writSession = this.Session["SelectedItems"] as List<DrinkRedirectModel>;
 
-            //foreach (var sub in writSession)
-            //{
-            //    DrinkRedirectModel.AddGroup(sub);
-            //}
+            foreach (var sub in writSession)
+            {
+                AddGroup(sub);
+            }
         }
-        //public static void AddGroup(DrinkRedirectModel orderDetail)
-        //{
-        //    try
-        //    {
-        //        using (DBContextModel context = new DBContextModel())
-        //        {
+        public static void AddGroup(DrinkRedirectModel orderDetail)
+        {
+            try
+            {
+                using (DBContextModel context = new DBContextModel())
+                {
 
-        //            OrderDetail neworderDetail = new OrderDetail();
-        //            //加入
-        //            neworderDetail.OrderDetailsID = orderDetail.OrderDetailsID;
-        //            neworderDetail.OrderNumber = orderDetail.OrderNumber;
-        //            neworderDetail.Account = orderDetail.Account;
-        //            neworderDetail.OrderTime = orderDetail.OrderTime;
-        //            neworderDetail.OrderEndTime = orderDetail.OrderEndTime;
-        //            neworderDetail.RequiredTime = orderDetail.RequiredTime;
-        //            neworderDetail.ProductName = orderDetail.ProductName;
-        //            neworderDetail.Quantity = orderDetail.Quantity;
-        //            neworderDetail.UnitPrice = orderDetail.UnitPrice;
-        //            neworderDetail.Suger = orderDetail.Suger;
-        //            neworderDetail.Ice = orderDetail.Ice;
-        //            neworderDetail.Toppings = orderDetail.Toppings;
-        //            neworderDetail.SupplierName = orderDetail.SupplierName;
-        //            neworderDetail.OtherRequest = orderDetail.OtherRequest;
+                    OrderDetail neworderDetail = new OrderDetail();
+                    //加入
+                    neworderDetail.OrderDetailsID = orderDetail.OrderDetailsID;
+                    neworderDetail.OrderNumber = orderDetail.OrderNumber;
+                    neworderDetail.Account = orderDetail.Account;
+                    //neworderDetail.OrderTime = orderDetail.OrderTime;
+                    //neworderDetail.OrderEndTime = orderDetail.OrderEndTime;
+                    //neworderDetail.RequiredTime = orderDetail.RequiredTime;
+                    neworderDetail.ProductName = orderDetail.ProductName;
+                    neworderDetail.Quantity = orderDetail.Quantity;
+                    neworderDetail.UnitPrice = orderDetail.UnitPrice;
+                    neworderDetail.Suger = orderDetail.Suger;
+                    neworderDetail.Ice = orderDetail.Ice;
+                    neworderDetail.Toppings = orderDetail.Toppings;
+                    neworderDetail.SupplierName = orderDetail.SupplierName;
+                    neworderDetail.OtherRequest = orderDetail.OtherRequest;
 
-        //            context.OrderDetails.Add(neworderDetail);
-        //            context.SaveChanges();
+                    context.OrderDetails.Add(neworderDetail);
+                    context.SaveChanges();
 
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.WriteLog(ex);
-        //        return;
-        //    }
-        //}
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return;
+            }
+        }
 
         /// <summary>
         /// 取得選取飲料店飲品資料

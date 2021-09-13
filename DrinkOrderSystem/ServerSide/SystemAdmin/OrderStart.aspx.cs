@@ -175,7 +175,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     totalAmount.ToString();
 
             }
-
         }
 
         public static List<DBORM.OrderDetail> GetOrderDetailList(string supplierName)

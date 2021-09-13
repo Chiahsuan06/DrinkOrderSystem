@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<%--    <script src="../../Scripts/jQuery3.6.0.js"></script>
+    <%--    <script src="../../Scripts/jQuery3.6.0.js"></script>
     <script>
         $(function () {
             $('#gdlist').hide();
