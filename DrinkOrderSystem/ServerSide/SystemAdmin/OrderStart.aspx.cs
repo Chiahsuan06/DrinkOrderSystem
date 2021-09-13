@@ -21,7 +21,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected void Imgbtn50Lan_Click(object sender, ImageClickEventArgs e)
         {
             this.txtChooseDrinkList.Text = string.Empty;
-            Session.Clear();
+            Session.Remove("DrinkShop");///這個
 
             this.Session["DrinkShop"] = "50Lan";
             string SupplierName = "50Lan";
@@ -33,7 +33,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected void ImgbtnWhiteAlley_Click(object sender, ImageClickEventArgs e)
         {
             this.txtChooseDrinkList.Text = string.Empty;
-            Session.Clear();
+            Session.Remove("DrinkShop");///這個
 
             this.Session["DrinkShop"] = "WhiteAlley";
             string SupplierName = "WhiteAlley";
@@ -45,7 +45,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected void ImgbtnMilkshop_Click(object sender, ImageClickEventArgs e)
         {
             this.txtChooseDrinkList.Text = string.Empty;
-            Session.Clear();
+            Session.Remove("DrinkShop");///這個
 
             this.Session["DrinkShop"] = "Milkshop";
             string SupplierName = "Milkshop";
@@ -140,6 +140,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
                 var orderdetaillist = new DrinkRedirectModel()
                 {
+                    OrderDetailsID = Guid.NewGuid(),
                     OrderNumber = orderNumber,
                     Account = account,
                     OrderTime = DateTime.Now.ToString(),

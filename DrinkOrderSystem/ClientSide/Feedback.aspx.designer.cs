@@ -7,74 +7,101 @@
 // </自動產生的>
 //------------------------------------------------------------------------------
 
-namespace DrinkOrderSystem.ServerSide.SystemAdmin
+namespace DrinkOrderSystem.ClientSide
 {
 
 
-    public partial class OderMid
+    public partial class Feedback
     {
 
         /// <summary>
-        /// gvChooseDrink 控制項。
+        /// Label1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvChooseDrink;
+        protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
-        /// ucPager 控制項。
+        /// txtboxName 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::DrinkOrderSystem.ServerSide.UserControl.ucPager ucPager;
+        protected global::System.Web.UI.WebControls.TextBox txtboxName;
 
         /// <summary>
-        /// txtChooseDrinkList 控制項。
+        /// Label2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtChooseDrinkList;
+        protected global::System.Web.UI.WebControls.Label Label2;
 
         /// <summary>
-        /// lbText 控制項。
+        /// txtboxMail 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbText;
+        protected global::System.Web.UI.WebControls.TextBox txtboxMail;
 
         /// <summary>
-        /// lbTotalAmount 控制項。
+        /// Label3 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbTotalAmount;
+        protected global::System.Web.UI.WebControls.Label Label3;
 
         /// <summary>
-        /// btnDelete 控制項。
+        /// txtboxMain 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
+        protected global::System.Web.UI.WebControls.TextBox txtboxMain;
 
         /// <summary>
-        /// btnSent 控制項。
+        /// lblFeedtext 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSent;
+        protected global::System.Web.UI.WebControls.Label lblFeedtext;
+
+        /// <summary>
+        /// TextBox1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+
+        /// <summary>
+        /// btndelete 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btndelete;
+
+        /// <summary>
+        /// btnsend 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnsend;
     }
 }

@@ -5,20 +5,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script src="../../Scripts/jQuery3.6.0.js"></script>
-    <script>   /*這個部份想請教*/
-        $('#ImgbtnWhiteAlley').click(function(){
-            $('#gdlist').toggleClass('open');
-            }
-        );
-    </script>
+<%--    <script src="../../Scripts/jQuery3.6.0.js"></script>
+    <script>
+        $(function () {
+            $('#gdlist').hide();
+
+            $('#d2').click(function () {
+
+                $('gdlist').show();
+            });
+
+        });
+    </script>--%>
     <style>
-        #gdlist.open{
-          display: block;
-        }
-        #gdlist{
-          display: none;
-        }
         #d1, #d2, #d3 {
             float: left;
             margin: 10px;
@@ -39,7 +38,7 @@
         </div>
 
     <div id="gdlist">
-        <h2 class="gd">請選擇飲料品項</h2>
+        <h2 class="gd" id="gd2">請選擇飲料品項</h2>
         <asp:GridView ID="gvChooseDrink" runat="server" AutoGenerateColumns="False" Height="89px" Width="418px" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" CssClass="auto-style1" OnRowCommand="gvChooseDrink_RowCommand" ForeColor="Black" GridLines="Vertical" >
             <AlternatingRowStyle BackColor="White" />
             <Columns>

@@ -7,6 +7,7 @@ namespace DrinkOrderSystem.Models
 {
     public class DrinkRedirectModel
     {
+        public Guid OrderDetailsID { get; set; }
         public string OrderNumber { get; set; }
 
         public string Account { get; set; }
